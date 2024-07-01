@@ -3,6 +3,8 @@ import { createContext } from './trpc';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './router';
 import cors from 'cors';
+import 'dotenv/config';
+import './database/connection';
 
 const app = express();
 
@@ -19,4 +21,4 @@ app.use(
 	})
 );
 
-app.listen(4199);
+app.listen(process.env.PORT);
