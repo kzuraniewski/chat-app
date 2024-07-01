@@ -1,10 +1,12 @@
-import express from 'express';
-import { createContext } from './trpc';
-import { createExpressMiddleware } from '@trpc/server/adapters/express';
-import { appRouter } from './router';
-import cors from 'cors';
 import 'dotenv/config';
-import './database/connection';
+
+import express from 'express';
+import cors from 'cors';
+import { createExpressMiddleware } from '@trpc/server/adapters/express';
+
+import { createContext } from './trpc';
+import { appRouter } from './router';
+import { connect } from './database/connection';
 
 const app = express();
 
@@ -21,4 +23,6 @@ app.use(
 	})
 );
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, async () => {
+	await connect();
+});
