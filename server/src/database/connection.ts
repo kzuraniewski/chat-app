@@ -1,4 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import logger from '../lib/logger';
 
 const atlasUri = process.env['ATLAS_URI'] || '';
 const client = new MongoClient(atlasUri, {
@@ -13,9 +14,10 @@ export const connect = async () => {
 	try {
 		await client.connect();
 		await client.db('admin').command({ ping: 1 });
-		console.log('Connected to MongoDB');
+
+		logger.info('Connected to MongoDB');
 	} catch (error) {
-		console.dir(error);
+		logger.error({ error }, 'Failed to connect to MongoDB');
 	}
 };
 
