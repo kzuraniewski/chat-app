@@ -10,21 +10,18 @@ const client = new MongoClient(atlasUri, {
 	},
 });
 
-export const connect = async () => {
+const connect = async () => {
 	try {
-		await client.connect();
-		await client.db('admin').command({ ping: 1 });
-
+		const connection = await client.connect();
 		logger.info('Connected to MongoDB');
+		return connection;
 	} catch (error) {
 		logger.error({ error }, 'Failed to connect to MongoDB');
+		throw error;
 	}
 };
 
-export const disconnect = async () => {
-	return client.close();
-};
+await connect();
 
 const db = client.db('main');
-
 export default db;

@@ -3,6 +3,7 @@ import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import jwt from 'jsonwebtoken';
 import config from './config';
 import logger from './lib/logger';
+import db from './database/connection';
 
 export const createContext = async ({
 	req,
@@ -13,6 +14,7 @@ export const createContext = async ({
 
 	return {
 		user,
+		db,
 	};
 };
 type Context = Awaited<ReturnType<typeof createContext>>;
