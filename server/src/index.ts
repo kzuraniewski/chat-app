@@ -9,6 +9,7 @@ import { createContext } from './trpc';
 import { appRouter } from './router';
 import config from './config';
 import logger from './lib/logger';
+import './database/connection';
 
 const app = express();
 

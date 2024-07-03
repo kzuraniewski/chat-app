@@ -3,7 +3,6 @@ import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import jwt from 'jsonwebtoken';
 import config from './config';
 import logger from './lib/logger';
-import db from './database/connection';
 
 export const createContext = async ({
 	req,
@@ -14,7 +13,6 @@ export const createContext = async ({
 
 	return {
 		user,
-		db,
 	};
 };
 type Context = Awaited<ReturnType<typeof createContext>>;
@@ -37,21 +35,31 @@ const log = t.middleware(async (opts) => {
 	const start = Date.now();
 
 	const result = await opts.next();
+
 	const duration = Date.now() - start;
+	const { path, type, rawInput } = opts;
 
 	if (result.ok) {
-		logger.info({
-			path: opts.path,
-			type: opts.type,
-			duration,
-		});
+		logger.info(
+			{
+				path,
+				type,
+				rawInput,
+				duration,
+			},
+			'Procedure called successfully'
+		);
 	} else {
-		logger.error({
-			path: opts.path,
-			type: opts.type,
-			duration,
-			error: result.error,
-		});
+		logger.error(
+			{
+				path,
+				type,
+				rawInput,
+				duration,
+				error: result.error,
+			},
+			'Procedure failed'
+		);
 	}
 
 	return result;
