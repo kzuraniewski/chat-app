@@ -11,11 +11,14 @@ export const USERNAME_REGEX =
 export const PASSWORD_REGEX =
 	/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/g;
 
-export const hashPassword = (password: string) => {
-	const salt = crypto.randomBytes(16).toString('hex');
-	return crypto
+const getRandomSalt = () => crypto.randomBytes(16).toString('hex');
+
+export const hashPassword = (password: string, salt = getRandomSalt()) => {
+	const hash = crypto
 		.pbkdf2Sync(password, salt, 4200, 256, 'sha256')
 		.toString('hex');
+
+	return { salt, hash };
 };
 
 const getTokenFromAuthHeader = (authHeader: string) => {

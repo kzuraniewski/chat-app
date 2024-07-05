@@ -7,10 +7,13 @@ const registerProcedure = authProcedure.mutation(async (opts) => {
 	const { prisma } = opts.ctx;
 
 	try {
+		const { salt, hash } = hashPassword(password);
+
 		const user = await prisma.user.create({
 			data: {
 				name,
-				passwordHash: hashPassword(password),
+				passwordHash: hash,
+				salt,
 			},
 		});
 
