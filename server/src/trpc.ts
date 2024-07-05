@@ -1,18 +1,20 @@
 import { TRPCError, initTRPC } from '@trpc/server';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import jwt from 'jsonwebtoken';
-import config from './config';
 import logger from './lib/logger';
+import { getJwtPayloadFromAuthHeader } from './utils/auth';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const createContext = async ({
 	req,
 	res,
 }: CreateExpressContextOptions) => {
-	const token = req.cookies.token;
-	const user = token ? jwt.verify(token, config.jwtSecret) : null;
+	const jwt = getJwtPayloadFromAuthHeader(req.headers.authorization);
 
 	return {
-		user,
+		jwt,
+		prisma,
 	};
 };
 type Context = Awaited<ReturnType<typeof createContext>>;
@@ -20,9 +22,9 @@ type Context = Awaited<ReturnType<typeof createContext>>;
 export const t = initTRPC.context<Context>().create();
 
 const isAuthorised = t.middleware((opts) => {
-	const { user } = opts.ctx;
+	const { jwt } = opts.ctx;
 
-	if (!user) {
+	if (!jwt) {
 		throw new TRPCError({
 			code: 'UNAUTHORIZED',
 		});
