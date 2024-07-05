@@ -6,11 +6,27 @@ import { AppRouter } from '../../../../server/src/router';
 	providedIn: 'root',
 })
 export class TrpcService {
-	private trpc = createTRPCProxyClient<AppRouter>({
+	protected trpc = createTRPCProxyClient<AppRouter>({
 		links: [
 			httpBatchLink({
 				url: 'http://localhost:4199',
+				headers: () => {
+					const token = this.getToken();
+					if (!token) return {};
+
+					return {
+						Authorization: `bearer ${token}`,
+					};
+				},
 			}),
 		],
 	});
+
+	getToken() {
+		return localStorage.getItem('token');
+	}
+
+	protected storeToken(token: string) {
+		localStorage.setItem('token', token);
+	}
 }
