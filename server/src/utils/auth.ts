@@ -31,16 +31,19 @@ const getTokenFromAuthHeader = (authHeader: string) => {
 
 export const generateToken = (user: User) => {
 	const today = new Date();
-	const exp = new Date(today);
-	exp.setDate(today.getDate() + 1);
+	const expDate = new Date(today);
+	expDate.setDate(today.getDate() + 1);
 
-	return jwt.sign(
-		{
-			id: user.id,
-			exp: Math.floor(exp.getTime() / 1000),
-		},
-		env.jwtSecret
-	);
+	const iat = today.getTime();
+	const exp = Math.floor(expDate.getTime() / 1000);
+
+	const payload: JwtPayload = {
+		id: user.id,
+		iat,
+		exp,
+	};
+
+	return jwt.sign(payload, env.jwtSecret);
 };
 
 export const getJwtPayloadFromAuthHeader = (
