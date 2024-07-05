@@ -1,11 +1,21 @@
-const config = {
-	port: process.env['PORT'],
-	atlasUri: process.env['ATLAS_URI'],
-	jwtSecret: process.env['JWT_SECRET'],
+import 'dotenv/config';
+import logger from './lib/logger';
+
+const env = (name: string) => {
+	const value = process.env[name];
+	if (!value) {
+		const message = `Cannot get value of environment variable: "${name}"`;
+		logger.fatal(message);
+		throw new Error(message);
+	}
+
+	return value;
 };
 
-Object.entries(config).forEach(([key, value]) => {
-	if (!value) throw new Error(`Invalid environment variable "${key}"`);
-});
+const config = {
+	port: env('PORT'),
+	atlasUri: env('ATLAS_URI'),
+	jwtSecret: env('JWT_SECRET'),
+} satisfies Record<string, string>;
 
-export default config as Record<keyof typeof config, string>;
+export default config;
