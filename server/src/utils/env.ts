@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import logger from './lib/logger';
+import logger from '../lib/logger';
 
-const env = (name: string) => {
+const use = (name: string) => {
 	const value = process.env[name];
 	if (!value) {
 		const message = `Cannot get value of environment variable: "${name}"`;
@@ -12,10 +12,10 @@ const env = (name: string) => {
 	return value;
 };
 
-const config = {
-	port: env('PORT'),
-	atlasUri: env('ATLAS_URI'),
-	jwtSecret: env('JWT_SECRET'),
+const env = {
+	port: use('PORT'),
+	atlasUri: use('ATLAS_URI'),
+	jwtSecret: use('JWT_SECRET'),
 } satisfies Record<string, string>;
 
-export default config;
+export default env;

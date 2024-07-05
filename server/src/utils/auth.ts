@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { User } from '@prisma/client';
 
-import config from '../config';
+import env from './env';
 
 export const USERNAME_REGEX =
 	/^(?=.{4,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/g;
@@ -39,7 +39,7 @@ export const generateToken = (user: User) => {
 			id: user.id,
 			exp: Math.floor(exp.getTime() / 1000),
 		},
-		config.jwtSecret
+		env.jwtSecret
 	);
 };
 
@@ -50,7 +50,7 @@ export const getJwtPayloadFromAuthHeader = (
 
 	try {
 		const token = getTokenFromAuthHeader(authHeader);
-		const payload = jwt.verify(token, config.jwtSecret);
+		const payload = jwt.verify(token, env.jwtSecret);
 
 		if (!isJwtPayload(payload)) return null;
 		return payload;

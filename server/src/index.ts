@@ -5,7 +5,7 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 
 import { createContext } from './trpc';
 import { appRouter } from './router';
-import config from './config';
+import env from './utils/env';
 import logger from './lib/logger';
 
 const app = express();
@@ -24,6 +24,6 @@ app.use(
 	})
 );
 
-app.listen(config.port, async () => {
-	logger.info(`Server listening on port ${config.port}`);
+app.listen(env.port, async () => {
+	logger.info(`Server listening on port ${env.port}`);
 });
