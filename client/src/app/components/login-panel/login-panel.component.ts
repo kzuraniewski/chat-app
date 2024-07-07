@@ -1,18 +1,24 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+	ReactiveFormsModule,
+	FormGroup,
+	FormControl,
+	Validators,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../services/auth.service';
+import { PASSWORD_REGEX, USERNAME_REGEX } from '../../utils/auth';
 
 @Component({
 	selector: 'app-login-panel',
 	standalone: true,
 	templateUrl: './login-panel.component.html',
 	imports: [
-		FormsModule,
+		ReactiveFormsModule,
 		ButtonModule,
 		InputTextModule,
 		CardModule,
@@ -21,12 +27,23 @@ import { AuthService } from '../../services/auth.service';
 	],
 })
 export class LoginPanelComponent {
-	username = 'root';
-	password = 'password';
+	loginForm = new FormGroup({
+		name: new FormControl('', [
+			Validators.required,
+			Validators.pattern(USERNAME_REGEX),
+		]),
+		password: new FormControl('', [
+			Validators.required,
+			Validators.pattern(PASSWORD_REGEX),
+		]),
+	});
 
 	constructor(private authService: AuthService) {}
 
 	handleLogin() {
-		this.authService.login(this.username, this.password);
+		const { name, password } = this.loginForm.value;
+		if (!name || !password) return;
+
+		this.authService.login(name, password);
 	}
 }

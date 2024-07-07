@@ -1,45 +1,40 @@
 <div class="container pt-10">
-	<p-card
-		styleClass="max-w-[30rem] mx-auto"
-		header="Sign in"
-		subheader="Welcome back! Please enter your details."
-	>
-		<div class="flex flex-col gap-8 mt-3">
-			<p-floatLabel>
-				<input
-					class="w-full"
-					pInputText
-					id="username"
-					type="text"
-					[(value)]="username"
-				/>
-				<label for="username">Username</label>
-			</p-floatLabel>
+	<form [formGroup]="loginForm">
+		<p-card
+			styleClass="max-w-[30rem] mx-auto [&_input]:w-full [&_button]:w-full"
+			header="Sign in"
+			subheader="Welcome back! Please enter your details."
+		>
+			<div class="flex flex-col gap-8 mt-3">
+				<p-floatLabel>
+					<input
+						pInputText
+						formControlName="name"
+						id="username"
+						type="text"
+					/>
+					<label for="username">Username</label>
+				</p-floatLabel>
 
-			<p-floatLabel>
-				<p-password
-					styleClass="w-full"
-					inputStyleClass="w-full"
-					id="password"
-					[(ngModel)]="password"
-					promptLabel="Choose a password"
-					weakLabel="Too simple"
-					mediumLabel="Average complexity"
-					strongLabel="Complex password"
-					[feedback]="true"
-				/>
-				<label for="password">Password</label>
-			</p-floatLabel>
-		</div>
+				<p-floatLabel>
+					<input
+						pInputText
+						id="password"
+						formControlName="password"
+					/>
+					<label for="password">Password</label>
+				</p-floatLabel>
+			</div>
 
-		<ng-template class="mt-5 flex justify-end" pTemplate="footer">
-			<p-button
-				label="Sign in"
-				styleClass="w-full"
-				(click)="handleLogin()"
-			/>
-		</ng-template>
-	</p-card>
+			<ng-template class="mt-5 flex justify-end" pTemplate="footer">
+				<p-button
+					label="Sign in"
+					type="submit"
+					(click)="handleLogin()"
+				/>
+			</ng-template>
+		</p-card>
+	</form>
 
 	<p class="text-sm text-center mt-4">
 		Not registered yet? <a href="/register">Create an account</a>
