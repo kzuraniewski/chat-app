@@ -28,14 +28,8 @@ import { PASSWORD_REGEX, USERNAME_REGEX } from '../../utils/auth';
 })
 export class LoginPanelComponent {
 	loginForm = new FormGroup({
-		name: new FormControl('', [
-			Validators.required,
-			Validators.pattern(USERNAME_REGEX),
-		]),
-		password: new FormControl('', [
-			Validators.required,
-			Validators.pattern(PASSWORD_REGEX),
-		]),
+		name: new FormControl('', [Validators.required]),
+		password: new FormControl('', [Validators.required]),
 	});
 
 	constructor(private authService: AuthService) {}
