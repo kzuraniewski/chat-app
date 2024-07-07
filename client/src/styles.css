@@ -8,7 +8,7 @@
 
 @layer tw-base {
 	a {
-		@apply underline text-[var(--primary-color)];
+		@apply underline text-[var(--primary-color)] transition-colors decoration-slate-300 hover:decoration-current;
 	}
 }
 
