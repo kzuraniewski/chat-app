@@ -1,9 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer tw-base, primeng, tw-components, tw-utilities;
 
-* {
-	box-sizing: border-box;
+@import "tailwindcss/base.css" layer(tw-base);
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "tailwindcss/components.css" layer(tw-components);
+@import "tailwindcss/utilities.css" layer(tw-utilities);
+
+@layer tw-base {
+	a {
+		@apply underline text-[var(--primary-color)];
+	}
 }
 
 body {
