@@ -31,6 +31,7 @@
 				<p-button
 					label="Sign in"
 					type="submit"
+					[disabled]="loginForm.invalid"
 					(click)="handleLogin()"
 				/>
 			</ng-template>
