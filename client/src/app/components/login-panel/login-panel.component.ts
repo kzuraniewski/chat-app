@@ -28,16 +28,16 @@ import { PASSWORD_REGEX, USERNAME_REGEX } from '../../utils/auth';
 })
 export class LoginPanelComponent {
 	loginForm = new FormGroup({
-		name: new FormControl('', [Validators.required]),
+		email: new FormControl('', [Validators.required]),
 		password: new FormControl('', [Validators.required]),
 	});
 
 	constructor(private authService: AuthService) {}
 
 	handleLogin() {
-		const { name, password } = this.loginForm.value;
-		if (!name || !password) return;
+		const { email, password } = this.loginForm.value;
+		if (!email || !password) return;
 
-		this.authService.login(name, password);
+		this.authService.login(email, password);
 	}
 }

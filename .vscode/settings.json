@@ -1,4 +1,8 @@
 {
-	"conventionalCommits.scopes": ["server", "client"],
+	"conventionalCommits.scopes": [
+		"server",
+		"client",
+		"client, server"
+	],
 	"tailwindCSS.classAttributes": ["class", "className", "ngClass", "styleClass"]
 }

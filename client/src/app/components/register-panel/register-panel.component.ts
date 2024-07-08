@@ -26,7 +26,8 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class RegisterPanelComponent {
 	registerForm = new FormGroup({
-		name: new FormControl('', this.formValidationService.username),
+		username: new FormControl('', this.formValidationService.username),
+		email: new FormControl('', this.formValidationService.email),
 		password: new FormControl('', this.formValidationService.password),
 		repeatPassword: new FormControl('', [
 			Validators.required,
@@ -40,9 +41,9 @@ export class RegisterPanelComponent {
 	) {}
 
 	handleSubmit() {
-		const { name, password } = this.registerForm.value;
-		if (!name || !password) return;
+		const { username, email, password } = this.registerForm.value;
+		if (!username || !email || !password) return;
 
-		this.authService.register(name, password);
+		this.authService.register(username, email, password);
 	}
 }

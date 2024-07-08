@@ -13,6 +13,11 @@ export class FormValidationService {
 		Validators.pattern(USERNAME_REGEX),
 	]) as ValidatorFn;
 
+	email = Validators.compose([
+		Validators.required,
+		Validators.email,
+	]) as ValidatorFn;
+
 	password = Validators.compose([
 		Validators.required,
 		Validators.minLength(8),
