@@ -1,7 +1,9 @@
 <div class="container pt-10">
-	<form [formGroup]="loginForm">
+	<form class="max-w-[30rem] mx-auto" [formGroup]="loginForm">
+		<p-messages [(value)]="messages" [enableService]="false" />
+
 		<p-card
-			styleClass="max-w-[30rem] mx-auto [&_input]:w-full [&_button]:w-full"
+			styleClass="[&_input]:w-full [&_button]:w-full"
 			header="Sign in"
 			subheader="Welcome back! Please enter your details."
 		>
