@@ -2,8 +2,12 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { User } from '@prisma/client';
+import type * as express from 'express';
 
 import env from './env';
+import logger from '../lib/logger';
+
+const SESSION_MAX_AGE = 1000 * 60 * 60 * 24; // 1 day
 
 export const USERNAME_REGEX =
 	/^(?=.{4,20}$)(?![_-])(?!.*[_-]{2})[a-zA-Z0-9-_]+(?<![_-])$/g;
@@ -21,24 +25,9 @@ export const hashPassword = (password: string, salt = getRandomSalt()) => {
 	return { salt, hash };
 };
 
-const getTokenFromAuthHeader = (authHeader: string) => {
-	const split = authHeader.split(' ');
-	if (split.length !== 2) throw new Error();
-
-	const [prefix, token] = split;
-
-	if (prefix !== 'bearer') throw new Error();
-
-	return token;
-};
-
-export const generateToken = (user: User) => {
-	const today = new Date();
-	const expDate = new Date(today);
-	expDate.setDate(today.getDate() + 1);
-
-	const iat = today.getTime();
-	const exp = Math.floor(expDate.getTime() / 1000);
+export const generateToken = (user: User, permanent = true) => {
+	const iat = Date.now();
+	const exp = permanent ? iat + SESSION_MAX_AGE : 0;
 
 	const payload: JwtPayload = {
 		id: user.id,
@@ -49,16 +38,30 @@ export const generateToken = (user: User) => {
 	return jwt.sign(payload, env.jwtSecret);
 };
 
-export const getJwtPayloadFromAuthHeader = (
-	authHeader: string | undefined
-): JwtPayload | null => {
-	if (!authHeader) return null;
+export const setTokenCookie = (
+	res: express.Response<any, Record<string, any>>,
+	user: User,
+	permanent = true
+) => {
+	const token = generateToken(user, permanent);
+	res.cookie('token', token, {
+		httpOnly: true,
+		secure: env.nodeEnv === 'production',
+		maxAge: SESSION_MAX_AGE,
+	});
+};
+
+export const verifyToken = (token: string | undefined) => {
+	if (!token) return null;
 
 	try {
-		const token = getTokenFromAuthHeader(authHeader);
 		const payload = jwt.verify(token, env.jwtSecret);
 
-		if (!isJwtPayload(payload)) return null;
+		if (!isJwtPayload(payload)) {
+			logger.warn(payload, 'Invalid JWT token payload');
+			return null;
+		}
+
 		return payload;
 	} catch {
 		return null;

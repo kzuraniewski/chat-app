@@ -10,23 +10,13 @@ export class TrpcService {
 		links: [
 			httpBatchLink({
 				url: 'http://localhost:4199',
-				headers: () => {
-					const token = this.getToken();
-					if (!token) return {};
-
-					return {
-						Authorization: `bearer ${token}`,
-					};
+				fetch: (input, init) => {
+					return fetch(input, {
+						...init,
+						credentials: 'include',
+					});
 				},
 			}),
 		],
 	});
-
-	getToken() {
-		return localStorage.getItem('token');
-	}
-
-	protected storeToken(token: string) {
-		localStorage.setItem('token', token);
-	}
 }

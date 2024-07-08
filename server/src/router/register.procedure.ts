@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { hashPassword, generateToken } from '../utils/auth';
+import { hashPassword, setTokenCookie } from '../utils/auth';
 import { publicProcedure } from './builders';
 
 const registerProcedure = publicProcedure
@@ -13,7 +13,7 @@ const registerProcedure = publicProcedure
 	)
 	.mutation(async (opts) => {
 		const { username, email, password } = opts.input;
-		const { prisma } = opts.ctx;
+		const { prisma, res } = opts.ctx;
 
 		try {
 			const { salt, hash } = hashPassword(password);
@@ -27,7 +27,7 @@ const registerProcedure = publicProcedure
 				},
 			});
 
-			return generateToken(user);
+			setTokenCookie(res, user);
 		} catch (error) {
 			throw new TRPCError({
 				code: 'BAD_REQUEST',

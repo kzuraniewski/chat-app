@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import assert from 'assert';
 import { z } from 'zod';
-import { generateToken, hashPassword } from '../utils/auth';
+import { hashPassword, setTokenCookie } from '../utils/auth';
 import { publicProcedure } from './builders';
 
 const loginProcedure = publicProcedure
@@ -13,7 +13,7 @@ const loginProcedure = publicProcedure
 	)
 	.query(async (opts) => {
 		const { email, password } = opts.input;
-		const { prisma } = opts.ctx;
+		const { prisma, res } = opts.ctx;
 
 		try {
 			const user = await prisma.user.findFirstOrThrow({
@@ -23,7 +23,7 @@ const loginProcedure = publicProcedure
 			const { hash: inputHash } = hashPassword(password, user.salt);
 			assert(user.passwordHash === inputHash);
 
-			return generateToken(user);
+			setTokenCookie(res, user);
 		} catch {
 			throw new TRPCError({
 				code: 'BAD_REQUEST',

@@ -11,18 +11,16 @@ export class AuthService extends TrpcService {
 	}
 
 	async register(username: string, email: string, password: string) {
-		const token = await this.trpc.register.mutate({
+		await this.trpc.register.mutate({
 			username,
 			email,
 			password,
 		});
-		this.storeToken(token);
 		this.router.navigate(['/']);
 	}
 
 	async login(email: string, password: string) {
-		const token = await this.trpc.login.query({ email, password });
-		this.storeToken(token);
+		await this.trpc.login.query({ email, password });
 		this.router.navigate(['/']);
 	}
 }

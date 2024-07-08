@@ -16,6 +16,7 @@ const env = {
 	port: use('PORT'),
 	atlasUri: use('ATLAS_URI'),
 	jwtSecret: use('JWT_SECRET'),
+	nodeEnv: use('NODE_ENV'),
 } satisfies Record<string, string>;
 
 export default env;
