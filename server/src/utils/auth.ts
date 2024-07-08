@@ -51,6 +51,10 @@ export const setTokenCookie = (
 	});
 };
 
+const isTokenExpired = (payload: JwtPayload) => {
+	return payload.exp < Date.now();
+};
+
 export const verifyToken = (token: string | undefined) => {
 	if (!token) return null;
 
@@ -59,6 +63,11 @@ export const verifyToken = (token: string | undefined) => {
 
 		if (!isValidJwtPayload(payload)) {
 			logger.warn(payload, 'Invalid JWT token payload');
+			return null;
+		}
+
+		if (isTokenExpired(payload)) {
+			logger.debug(payload, 'JWT token expired');
 			return null;
 		}
 
