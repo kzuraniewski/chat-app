@@ -57,7 +57,7 @@ export const verifyToken = (token: string | undefined) => {
 	try {
 		const payload = jwt.verify(token, env.jwtSecret);
 
-		if (!isJwtPayload(payload)) {
+		if (!isValidJwtPayload(payload)) {
 			logger.warn(payload, 'Invalid JWT token payload');
 			return null;
 		}
@@ -76,6 +76,6 @@ const jwtPayloadSchema = z.object({
 
 export type JwtPayload = z.infer<typeof jwtPayloadSchema>;
 
-export const isJwtPayload = (value: unknown): value is JwtPayload => {
+export const isValidJwtPayload = (value: unknown): value is JwtPayload => {
 	return jwtPayloadSchema.safeParse(value).success;
 };
