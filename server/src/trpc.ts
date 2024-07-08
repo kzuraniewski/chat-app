@@ -1,13 +1,13 @@
 import { initTRPC } from '@trpc/server';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { verifyToken } from './utils/auth';
+import { getJwtPayload } from './utils/auth';
 import { prisma } from './prisma';
 
 export const createContext = async ({
 	req,
 	res,
 }: CreateExpressContextOptions) => {
-	const jwt = verifyToken(req.cookies['token']);
+	const jwt = getJwtPayload(req.cookies['token']);
 
 	return {
 		req,

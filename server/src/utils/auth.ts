@@ -55,7 +55,7 @@ const isTokenExpired = (payload: JwtPayload) => {
 	return payload.exp < Date.now();
 };
 
-export const verifyToken = (token: string | undefined) => {
+export const getJwtPayload = (token: string | undefined) => {
 	if (!token) return null;
 
 	try {
