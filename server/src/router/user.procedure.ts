@@ -8,6 +8,11 @@ const userProcedure = protectedProcedure.query((opts) => {
 	try {
 		return prisma.user.findFirstOrThrow({
 			where: { id: jwt.id },
+			select: {
+				id: true,
+				username: true,
+				email: true,
+			},
 		});
 	} catch {
 		logger.error(jwt, 'Cannot find user from JWT payload');
