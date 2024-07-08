@@ -23,4 +23,12 @@ export class AuthService extends TrpcService {
 		await this.trpc.login.query({ email, password });
 		this.router.navigate(['/']);
 	}
+
+	async getUser() {
+		try {
+			return await this.trpc.user.query();
+		} catch {
+			return null;
+		}
+	}
 }
