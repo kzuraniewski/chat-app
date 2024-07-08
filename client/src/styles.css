@@ -10,6 +10,10 @@
 	a {
 		@apply underline text-[var(--primary-color)] transition-colors decoration-slate-300 hover:decoration-current;
 	}
+
+	label {
+		@apply block mb-1.5;
+	}
 }
 
 body {

@@ -1,0 +1,54 @@
+<div class="container pt-10">
+	<form [formGroup]="registerForm">
+		<p-card
+			styleClass="max-w-[30rem] mx-auto [&_input]:w-full [&_button]:w-full"
+			header="Sign up"
+			subheader="Get access to all the features by creating an account"
+		>
+			<div class="flex flex-col gap-8 mt-3">
+				<p-floatLabel>
+					<input
+						pInputText
+						formControlName="name"
+						id="username"
+						type="text"
+					/>
+					<label for="username">Username</label>
+				</p-floatLabel>
+
+				<p-floatLabel>
+					<input
+						pInputText
+						id="password"
+						type="password"
+						formControlName="password"
+					/>
+					<label for="password">Password</label>
+				</p-floatLabel>
+
+				<p-floatLabel>
+					<input
+						pInputText
+						id="password"
+						type="password"
+						formControlName="repeatPassword"
+					/>
+					<label for="repeatPassword">Repeat password</label>
+				</p-floatLabel>
+			</div>
+
+			<ng-template class="mt-5 flex justify-end" pTemplate="footer">
+				<p-button
+					label="Sign up"
+					type="submit"
+					[disabled]="registerForm.invalid"
+					(click)="handleSubmit()"
+				/>
+			</ng-template>
+		</p-card>
+	</form>
+
+	<p class="text-sm text-center mt-4">
+		Already have an account? <a href="/login">Sign in</a>
+	</p>
+</div>
