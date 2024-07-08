@@ -10,7 +10,9 @@ const authMiddleware = t.middleware((opts) => {
 		});
 	}
 
-	return opts.next();
+	return opts.next({
+		ctx: { jwt },
+	});
 });
 
 export default authMiddleware;

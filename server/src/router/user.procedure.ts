@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server';
-import assert from 'assert';
 import logger from '../lib/logger';
 import { protectedProcedure } from './builders';
 
@@ -7,7 +6,6 @@ const userProcedure = protectedProcedure.query((opts) => {
 	const { jwt, prisma } = opts.ctx;
 
 	try {
-		assert(jwt);
 		return prisma.user.findFirstOrThrow({
 			where: { id: jwt.id },
 		});
