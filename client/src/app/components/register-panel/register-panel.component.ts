@@ -11,6 +11,10 @@ import { ButtonModule } from 'primeng/button';
 import { FormValidationService } from '../../services/form-validation.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { Message } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+
+// FIXME: When changing password, error is not shown when repeat password field stays the same, only after its change
 
 @Component({
 	selector: 'app-register-panel',
@@ -21,6 +25,7 @@ import { InputTextModule } from 'primeng/inputtext';
 		ButtonModule,
 		FloatLabelModule,
 		InputTextModule,
+		MessagesModule,
 	],
 	templateUrl: './register-panel.component.html',
 })
@@ -34,16 +39,31 @@ export class RegisterPanelComponent {
 			this.formValidationService.match('password'),
 		]),
 	});
+	messages: Message[] = [];
 
 	constructor(
 		private authService: AuthService,
 		private formValidationService: FormValidationService,
 	) {}
 
-	handleSubmit() {
+	async handleSubmit() {
 		const { username, email, password } = this.registerForm.value;
 		if (!username || !email || !password) return;
 
-		this.authService.register(username, email, password);
+		try {
+			await this.authService.register(username, email, password);
+		} catch {
+			this.registerForm.setErrors({ invalid: true });
+			this.showErrorMessage();
+		}
+	}
+
+	showErrorMessage() {
+		this.messages = [
+			{
+				severity: 'error',
+				summary: 'Cannot register user with given credentials',
+			},
+		];
 	}
 }
