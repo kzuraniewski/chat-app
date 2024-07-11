@@ -10,7 +10,7 @@ const loggerMiddleware = t.middleware(async (opts) => {
 	const { path, type, rawInput } = opts;
 
 	if (result.ok) {
-		logger.info(
+		logger.debug(
 			{
 				path,
 				type,
