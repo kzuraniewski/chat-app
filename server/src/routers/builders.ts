@@ -1,15 +1,15 @@
 import { t } from '../trpc';
-import authMiddleware from '../middleware/auth.middleware';
-import loggerMiddleware from '../middleware/logger.middleware';
-import protocolMiddleware from '../middleware/protocol.middleware';
+import auth from '../middleware/auth.middleware';
+import log from '../middleware/log.middleware';
+import protocol from '../middleware/protocol.middleware';
 
 const httpProcedure = t.procedure
-	.use(protocolMiddleware('http'))
-	.use(loggerMiddleware);
+	.use(protocol('http'))
+	.use(log);
 
 export const publicProcedure = httpProcedure;
-export const protectedProcedure = httpProcedure.use(authMiddleware);
+export const protectedProcedure = httpProcedure.use(auth);
 
 export const wsProcedure = t.procedure
-	.use(protocolMiddleware('ws'))
-	.use(authMiddleware);
+	.use(protocol('ws'))
+	.use(auth);

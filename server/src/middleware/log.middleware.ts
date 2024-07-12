@@ -1,7 +1,7 @@
 import logger from '../lib/logger';
 import { t } from '../trpc';
 
-const loggerMiddleware = t.middleware(async (opts) => {
+const log = t.middleware(async (opts) => {
 	const start = Date.now();
 
 	const result = await opts.next();
@@ -35,4 +35,4 @@ const loggerMiddleware = t.middleware(async (opts) => {
 	return result;
 });
 
-export default loggerMiddleware;
+export default log;

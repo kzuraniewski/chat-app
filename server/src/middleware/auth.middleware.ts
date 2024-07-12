@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { t } from '../trpc';
 
-const authMiddleware = t.middleware((opts) => {
+const auth = t.middleware((opts) => {
 	const { jwt } = opts.ctx;
 
 	if (!jwt) {
@@ -15,4 +15,4 @@ const authMiddleware = t.middleware((opts) => {
 	});
 });
 
-export default authMiddleware;
+export default auth;

@@ -4,7 +4,7 @@ export type Protocol = 'http' | 'ws';
 
 // TODO: Throw if invalid protocol
 
-const protocolMiddleware = <T extends Protocol>(_protocol: T) =>
+const protocol = <T extends Protocol>(_protocol: T) =>
 	t.middleware((opts) => {
 		return opts.next({
 			ctx: opts.ctx as Omit<typeof opts.ctx, 'req' | 'res'> &
@@ -15,4 +15,4 @@ const protocolMiddleware = <T extends Protocol>(_protocol: T) =>
 		});
 	});
 
-export default protocolMiddleware;
+export default protocol;
