@@ -10,18 +10,13 @@ import { ChatService } from '../../services/chat.service';
 	imports: [MessageFieldComponent, ButtonModule],
 })
 export class ConversationPanelComponent implements OnInit, OnDestroy {
-	activeId: string | null = null;
+	activeConversationId: string | null = null;
 	disconnect?: () => void;
 
 	constructor(private chatService: ChatService) {}
 
 	ngOnInit(): void {
-		this.chatService
-			.createConversation('668bfdb64ac9c2fe4477abad')
-			.then((conversation) => {
-				this.activeId = conversation.id;
-				this.chatService.connect(conversation.id);
-			});
+		this.setupLiveChat();
 	}
 
 	ngOnDestroy(): void {
@@ -29,7 +24,16 @@ export class ConversationPanelComponent implements OnInit, OnDestroy {
 	}
 
 	sendMessage(message: string) {
-		if (!this.activeId) return;
-		this.chatService.send(this.activeId, message);
+		if (!this.activeConversationId) return;
+		this.chatService.send(this.activeConversationId, message);
+	}
+
+	private async setupLiveChat() {
+		const conversation = await this.chatService.createConversation(
+			'668bfdb64ac9c2fe4477abad',
+		);
+
+		this.activeConversationId = conversation.id;
+		this.disconnect = this.chatService.connect(conversation.id);
 	}
 }
