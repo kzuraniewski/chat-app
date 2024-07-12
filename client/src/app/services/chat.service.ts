@@ -1,13 +1,10 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { TrpcService } from './trpc.service';
-import { Unsubscribable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class ChatService extends TrpcService implements OnDestroy {
-	private subscription?: Unsubscribable;
-
+export class ChatService extends TrpcService {
 	createConversation(userId: string) {
 		return this.trpc.app.conversations.create.mutate({
 			userId,
@@ -15,10 +12,7 @@ export class ChatService extends TrpcService implements OnDestroy {
 	}
 
 	connect(conversationId: string) {
-		if (this.subscription)
-			throw new Error('Attempt to resubscribe for chat events');
-
-		this.subscription = this.trpc.liveChat.onUpdate.subscribe(
+		const subscription = this.trpc.liveChat.onUpdate.subscribe(
 			{ conversationId },
 			{
 				onData(data) {
@@ -28,6 +22,11 @@ export class ChatService extends TrpcService implements OnDestroy {
 		);
 
 		console.log('Live chat session started');
+
+		return () => {
+			subscription.unsubscribe();
+			console.log('Live chat session closed');
+		};
 	}
 
 	send(conversationId: string, content: string) {
@@ -36,12 +35,5 @@ export class ChatService extends TrpcService implements OnDestroy {
 			conversationId,
 		});
 		console.log('Message sent');
-	}
-
-	ngOnDestroy() {
-		if (!this.subscription) return;
-
-		this.subscription.unsubscribe();
-		console.log('Live chat session closed');
 	}
 }

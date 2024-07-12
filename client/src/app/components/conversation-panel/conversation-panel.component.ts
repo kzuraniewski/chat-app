@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageFieldComponent } from '../message-field/message-field.component';
 import { ButtonModule } from 'primeng/button';
 import { ChatService } from '../../services/chat.service';
@@ -9,8 +9,9 @@ import { ChatService } from '../../services/chat.service';
 	templateUrl: './conversation-panel.component.html',
 	imports: [MessageFieldComponent, ButtonModule],
 })
-export class ConversationPanelComponent implements OnInit {
+export class ConversationPanelComponent implements OnInit, OnDestroy {
 	activeId: string | null = null;
+	disconnect?: () => void;
 
 	constructor(private chatService: ChatService) {}
 
@@ -21,6 +22,10 @@ export class ConversationPanelComponent implements OnInit {
 				this.activeId = conversation.id;
 				this.chatService.connect(conversation.id);
 			});
+	}
+
+	ngOnDestroy(): void {
+		this.disconnect?.();
 	}
 
 	test() {
