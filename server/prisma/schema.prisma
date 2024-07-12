@@ -8,9 +8,29 @@ datasource db {
 }
 
 model User {
-    id           String @id @default(auto()) @map("_id") @db.ObjectId
-    username     String @unique
-    email        String @unique
-    passwordHash String
-    salt         String
+    id              String         @id @default(auto()) @map("_id") @db.ObjectId
+    username        String         @unique
+    email           String         @unique
+    passwordHash    String
+    salt            String
+    conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
+    conversationIds String[]       @db.ObjectId
+    messagesSent    Message[]
+}
+
+model Conversation {
+    id       String    @id @default(auto()) @map("_id") @db.ObjectId
+    users    User[]    @relation(fields: [userIds], references: [id])
+    userIds  String[]  @db.ObjectId
+    messages Message[]
+}
+
+model Message {
+    id             String       @id @default(auto()) @map("_id") @db.ObjectId
+    content        String
+    timestamp      DateTime     @default(now())
+    sender         User         @relation(fields: [senderId], references: [id])
+    senderId       String       @db.ObjectId
+    conversation   Conversation @relation(fields: [conversationId], references: [id])
+    conversationId String       @db.ObjectId
 }

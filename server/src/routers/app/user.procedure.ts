@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import logger from '../lib/logger';
-import { protectedProcedure } from './builders';
+import logger from '../../lib/logger';
+import { protectedProcedure } from '../builders';
 
 const userProcedure = protectedProcedure.query((opts) => {
 	const { jwt, prisma } = opts.ctx;

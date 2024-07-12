@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import assert from 'assert';
 import { z } from 'zod';
-import { hashPassword, setTokenCookie } from '../utils/auth';
-import { publicProcedure } from './builders';
+import { hashPassword, setTokenCookie } from '../../utils/auth';
+import { publicProcedure } from '../builders';
 
 const loginProcedure = publicProcedure
 	.input(
@@ -23,7 +23,7 @@ const loginProcedure = publicProcedure
 			const { hash: inputHash } = hashPassword(password, user.salt);
 			assert(user.passwordHash === inputHash);
 
-			setTokenCookie(res, user);
+			setTokenCookie(res as any, user);
 		} catch {
 			throw new TRPCError({
 				code: 'BAD_REQUEST',

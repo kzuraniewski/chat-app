@@ -11,7 +11,7 @@ export class AuthService extends TrpcService {
 	}
 
 	async register(username: string, email: string, password: string) {
-		await this.trpc.register.mutate({
+		await this.trpc.app.register.mutate({
 			username,
 			email,
 			password,
@@ -20,13 +20,13 @@ export class AuthService extends TrpcService {
 	}
 
 	async login(email: string, password: string) {
-		await this.trpc.login.query({ email, password });
+		await this.trpc.app.login.query({ email, password });
 		this.router.navigate(['/']);
 	}
 
 	async getUser() {
 		try {
-			return await this.trpc.user.query();
+			return await this.trpc.app.user.query();
 		} catch {
 			return null;
 		}

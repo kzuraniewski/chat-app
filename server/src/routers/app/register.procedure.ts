@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { hashPassword, setTokenCookie } from '../utils/auth';
-import { publicProcedure } from './builders';
+import { hashPassword, setTokenCookie } from '../../utils/auth';
+import { publicProcedure } from '../builders';
 
 const registerProcedure = publicProcedure
 	.input(

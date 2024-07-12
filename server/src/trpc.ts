@@ -1,21 +1,38 @@
 import { initTRPC } from '@trpc/server';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import { getJwtPayload } from './utils/auth';
+import { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
+import EventEmitter from 'events';
 import { prisma } from './prisma';
+import { getJwtPayload, JwtPayload } from './utils/auth';
+import cookie from 'cookie';
 
-export const createContext = async ({
+const events = new EventEmitter();
+
+type ContextBase = {
+	prisma: typeof prisma;
+	events: typeof events;
+	jwt: JwtPayload | null;
+};
+
+export type ExpressContext = ContextBase & CreateExpressContextOptions;
+export type WsContext = ContextBase & CreateWSSContextFnOptions;
+
+export const createContext = ({
 	req,
 	res,
-}: CreateExpressContextOptions) => {
-	const jwt = getJwtPayload(req.cookies['token']);
+}: CreateExpressContextOptions | CreateWSSContextFnOptions) => {
+	const cookies = req.headers.cookie
+		? cookie.parse(req.headers.cookie)
+		: null;
+	const jwt = getJwtPayload(cookies?.['token']);
 
 	return {
+		prisma,
+		events,
 		req,
 		res,
 		jwt,
-		prisma,
-	};
+	} as ExpressContext | WsContext;
 };
-type Context = Awaited<ReturnType<typeof createContext>>;
 
-export const t = initTRPC.context<Context>().create();
+export const t = initTRPC.context<ExpressContext | WsContext>().create();

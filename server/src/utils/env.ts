@@ -13,7 +13,8 @@ const use = (name: string) => {
 };
 
 const env = {
-	port: use('PORT'),
+	httpPort: use('HTTP_PORT'),
+	wsPort: use('WS_PORT'),
 	atlasUri: use('ATLAS_URI'),
 	jwtSecret: use('JWT_SECRET'),
 	nodeEnv: use('NODE_ENV'),
