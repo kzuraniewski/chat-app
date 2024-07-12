@@ -29,7 +29,9 @@ app.listen(env.httpPort, () => {
 	logger.info(`Server listening on port ${env.httpPort}`);
 });
 
-const wss = new WebSocketServer({ port: 4198 });
+const wss = new WebSocketServer({
+	port: parseInt(env.wsPort),
+});
 
 const handler = applyWSSHandler({
 	wss,
