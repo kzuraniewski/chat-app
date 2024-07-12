@@ -28,8 +28,8 @@ export class ConversationPanelComponent implements OnInit, OnDestroy {
 		this.disconnect?.();
 	}
 
-	test() {
+	sendMessage(message: string) {
 		if (!this.activeId) return;
-		this.chatService.send(this.activeId, 'dupa');
+		this.chatService.send(this.activeId, message);
 	}
 }
