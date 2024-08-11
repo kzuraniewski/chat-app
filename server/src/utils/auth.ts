@@ -26,7 +26,7 @@ export const hashPassword = (password: string, salt = getRandomSalt()) => {
 };
 
 export const generateToken = (user: User, permanent = true) => {
-	const iat = Date.now();
+	const iat = Math.floor(Date.now() / 1000);
 	const exp = permanent ? iat + SESSION_MAX_AGE : 0;
 
 	const payload: JwtPayload = {
