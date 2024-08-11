@@ -23,7 +23,7 @@ const loginProcedure = publicProcedure
 			const { hash: inputHash } = hashPassword(password, user.salt);
 			assert(user.passwordHash === inputHash);
 
-			setTokenCookie(res as any, user);
+			setTokenCookie(res, user);
 		} catch {
 			throw new TRPCError({
 				code: 'BAD_REQUEST',
