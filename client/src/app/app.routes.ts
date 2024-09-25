@@ -18,10 +18,21 @@ export const authGuard: CanActivateFn = async () => {
 
 export const routes: Routes = [
 	{
-		path: '',
+		path: 'app',
 		component: ConversationPanelComponent,
 		canActivate: [authGuard],
 	},
-	{ path: 'login', component: LoginPanelComponent },
-	{ path: 'register', component: RegisterPanelComponent },
+	{
+		path: '',
+		redirectTo: '/app',
+		pathMatch: 'full',
+	},
+	{
+		path: 'login',
+		component: LoginPanelComponent,
+	},
+	{
+		path: 'register',
+		component: RegisterPanelComponent,
+	},
 ];
