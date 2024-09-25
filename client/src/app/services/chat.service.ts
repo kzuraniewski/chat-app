@@ -6,7 +6,10 @@ import { LogService } from './log.service';
 	providedIn: 'root',
 })
 export class ChatService {
-	constructor(@Inject(TRPC) private trpc: Trpc) {}
+	constructor(
+		@Inject(TRPC) private trpc: Trpc,
+		private logService: LogService,
+	) {}
 
 	createConversation(userId: string) {
 		return this.trpc.app.conversations.create.mutate({
@@ -24,11 +27,11 @@ export class ChatService {
 			},
 		);
 
-		console.log('Live chat session started');
+		this.logService.debug('Live chat session started');
 
 		return () => {
 			subscription.unsubscribe();
-			console.log('Live chat session closed');
+			this.logService.debug('Live chat session closed');
 		};
 	}
 
@@ -37,6 +40,6 @@ export class ChatService {
 			content,
 			conversationId,
 		});
-		console.log('Message sent');
+		this.logService.debug('Message sent');
 	}
 }
