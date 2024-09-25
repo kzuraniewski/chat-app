@@ -7,6 +7,7 @@ const auth = t.middleware((opts) => {
 	if (!jwt) {
 		throw new TRPCError({
 			code: 'UNAUTHORIZED',
+			message: 'Missing JWT token'
 		});
 	}
 
