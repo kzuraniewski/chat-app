@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, Routes } from '@angular/router';
 
-import { AuthService } from '@/services/auth.service';
 import { ConversationPanelComponent } from '@/components/conversation-panel/conversation-panel.component';
 import { LoginPanelComponent } from '@/components/login-panel/login-panel.component';
 import { RegisterPanelComponent } from '@/components/register-panel/register-panel.component';
+import { AuthService } from '@/services/auth.service';
 
 export const authGuard: CanActivateFn = async () => {
 	const router = inject(Router);

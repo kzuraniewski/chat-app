@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
-import { ChatService } from '@/services/chat.service';
 import { MessageFieldComponent } from '@/components/message-field/message-field.component';
+import { ChatService } from '@/services/chat.service';
 
 @Component({
 	selector: 'app-conversation-panel',
