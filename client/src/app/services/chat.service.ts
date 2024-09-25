@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
-import { TrpcService } from './trpc.service';
+import { Inject, Injectable } from '@angular/core';
+import { Trpc, TRPC } from '../utils/trpc';
+import { LogService } from './log.service';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class ChatService extends TrpcService {
+export class ChatService {
+	constructor(@Inject(TRPC) private trpc: Trpc) {}
+
 	createConversation(userId: string) {
 		return this.trpc.app.conversations.create.mutate({
 			userId,

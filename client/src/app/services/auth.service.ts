@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { TrpcService } from './trpc.service';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Trpc, TRPC } from '../utils/trpc';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class AuthService extends TrpcService {
-	constructor(private router: Router) {
-		super();
-	}
+export class AuthService {
+	constructor(
+		@Inject(TRPC) private trpc: Trpc,
+		private router: Router,
+	) {}
 
 	async register(username: string, email: string, password: string) {
 		await this.trpc.app.register.mutate({
