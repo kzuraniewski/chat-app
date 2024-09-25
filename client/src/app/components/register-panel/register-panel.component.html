@@ -1,5 +1,5 @@
 <div class="container pt-10">
-	<form class="max-w-[30rem] mx-auto" [formGroup]="registerForm">
+	<form class="mx-auto max-w-[30rem]" [formGroup]="registerForm">
 		<p-messages [(value)]="messages" [enableService]="false" />
 
 		<p-card
@@ -7,7 +7,7 @@
 			header="Sign up"
 			subheader="Get access to all the features by creating an account"
 		>
-			<div class="flex flex-col gap-8 mt-3">
+			<div class="mt-3 flex flex-col gap-8">
 				<p-floatLabel>
 					<input
 						pInputText
@@ -60,7 +60,7 @@
 		</p-card>
 	</form>
 
-	<p class="text-sm text-center mt-4">
+	<p class="mt-4 text-center text-sm">
 		Already have an account? <a href="/login">Sign in</a>
 	</p>
 </div>

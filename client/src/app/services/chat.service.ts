@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { Trpc, TRPC } from '../utils/trpc';
-import { LogService } from './log.service';
+
+import { LogService } from '@/services/log.service';
+import { Trpc, TRPC } from '@/utils/trpc';
 
 @Injectable({
 	providedIn: 'root',

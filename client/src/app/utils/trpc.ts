@@ -5,8 +5,10 @@ import {
 	httpBatchLink,
 	wsLink,
 } from '@trpc/client';
+
 import { AppRouter } from '../../../../server/src/routers/app';
 import { LiveChatRouter } from '../../../../server/src/routers/liveChat';
+
 // FIXME no imports from server
 
 const wsClient = createWSClient({

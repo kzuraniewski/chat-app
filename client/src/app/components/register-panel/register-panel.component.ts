@@ -5,14 +5,15 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { CardModule } from 'primeng/card';
+import { Message } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { FormValidationService } from '../../services/form-validation.service';
+import { CardModule } from 'primeng/card';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
+
+import { AuthService } from '@/services/auth.service';
+import { FormValidationService } from '@/services/form-validation.service';
 
 // FIXME: When changing password, error is not shown when repeat password field stays the same, only after its change
 

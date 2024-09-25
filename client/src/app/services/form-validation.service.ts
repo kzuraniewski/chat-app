@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ValidatorFn, Validators } from '@angular/forms';
-import { PASSWORD_REGEX, USERNAME_REGEX } from '../utils/auth';
+
+import { PASSWORD_REGEX, USERNAME_REGEX } from '@/utils/auth';
 
 @Injectable({
 	providedIn: 'root',

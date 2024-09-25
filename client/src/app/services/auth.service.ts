@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Trpc, TRPC } from '../utils/trpc';
+
+import { Trpc, TRPC } from '@/utils/trpc';
 
 @Injectable({
 	providedIn: 'root',
