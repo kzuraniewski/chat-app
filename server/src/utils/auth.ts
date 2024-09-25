@@ -52,7 +52,7 @@ export const setTokenCookie = (
 };
 
 const isTokenExpired = (payload: JwtPayload) => {
-	return payload.exp < Date.now();
+	return payload.exp < Date.now() / 1000;
 };
 
 export const getJwtPayload = (token: string | undefined) => {
