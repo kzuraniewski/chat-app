@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class MessageFieldComponent {
 	value = '';
-	@Output() send = new EventEmitter<string>();
+	send = output<string>();
 
 	submit() {
 		this.send.emit(this.value);

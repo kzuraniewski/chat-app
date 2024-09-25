@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'text';
 
@@ -10,5 +10,5 @@ export type ButtonVariant = 'primary' | 'secondary' | 'text';
 	templateUrl: './button.component.html',
 })
 export class ButtonComponent {
-	@Input() variant: ButtonVariant = 'secondary';
+	variant = input<ButtonVariant>('secondary');
 }

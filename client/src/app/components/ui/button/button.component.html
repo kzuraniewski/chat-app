@@ -1,8 +1,8 @@
 <button
 	class="rounded-xl px-3 py-1 m-1 uppercase transition-colors"
 	[ngClass]="{
-		'bg-cyan-600 text-white hover:bg-cyan-700': variant === 'primary',
-		'border border-cyan-600 text-cyan-600 hover:text-cyan-700 hover:border-cyan-700': variant === 'secondary'
+		'bg-cyan-600 text-white hover:bg-cyan-700': variant() === 'primary',
+		'border border-cyan-600 text-cyan-600 hover:text-cyan-700 hover:border-cyan-700': variant() === 'secondary'
 	}"
 >
 	<ng-content></ng-content>
