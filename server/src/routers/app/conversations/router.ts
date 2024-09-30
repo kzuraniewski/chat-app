@@ -1,4 +1,5 @@
-import { t } from '../../../trpc';
+import { t } from '@/trpc';
+
 import createProcedure from './create.procedure';
 import getAllProcedure from './getAll.procedure';
 

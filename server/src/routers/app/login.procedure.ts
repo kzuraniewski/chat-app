@@ -1,7 +1,9 @@
-import { TRPCError } from '@trpc/server';
 import assert from 'assert';
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { hashPassword, setTokenCookie } from '../../utils/auth';
+
+import { hashPassword, setTokenCookie } from '@/utils/auth';
+
 import { publicProcedure } from '../builders';
 
 const loginProcedure = publicProcedure
@@ -9,7 +11,7 @@ const loginProcedure = publicProcedure
 		z.object({
 			email: z.string(),
 			password: z.string(),
-		})
+		}),
 	)
 	.query(async (opts) => {
 		const { email, password } = opts.input;

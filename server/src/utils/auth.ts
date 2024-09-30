@@ -1,11 +1,11 @@
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
-import { z } from 'zod';
 import { User } from '@prisma/client';
 import type * as express from 'express';
+import jwt from 'jsonwebtoken';
+import { z } from 'zod';
 
-import env from './env';
-import logger from '../lib/logger';
+import logger from '@/lib/logger';
+import env from '@/utils/env';
 
 const SESSION_MAX_AGE = 1000 * 60 * 60 * 24; // 1 day
 
@@ -41,7 +41,7 @@ export const generateToken = (user: User, permanent = true) => {
 export const setTokenCookie = (
 	res: express.Response<any, Record<string, any>>,
 	user: User,
-	permanent = true
+	permanent = true,
 ) => {
 	const token = generateToken(user, permanent);
 	res.cookie('token', token, {

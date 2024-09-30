@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import { t } from '../trpc';
+
+import { t } from '@/trpc';
 
 const auth = t.middleware((opts) => {
 	const { jwt } = opts.ctx;
@@ -7,7 +8,7 @@ const auth = t.middleware((opts) => {
 	if (!jwt) {
 		throw new TRPCError({
 			code: 'UNAUTHORIZED',
-			message: 'Missing JWT token'
+			message: 'Missing JWT token',
 		});
 	}
 

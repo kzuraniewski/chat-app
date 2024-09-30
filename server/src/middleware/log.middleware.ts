@@ -1,5 +1,5 @@
-import logger from '../lib/logger';
-import { t } from '../trpc';
+import logger from '@/lib/logger';
+import { t } from '@/trpc';
 
 const log = t.middleware(async (opts) => {
 	const start = Date.now();
@@ -17,7 +17,7 @@ const log = t.middleware(async (opts) => {
 				rawInput,
 				duration,
 			},
-			'Procedure called successfully'
+			'Procedure called successfully',
 		);
 	} else {
 		logger.error(
@@ -28,7 +28,7 @@ const log = t.middleware(async (opts) => {
 				duration,
 				error: result.error,
 			},
-			'Procedure failed'
+			'Procedure failed',
 		);
 	}
 

@@ -1,11 +1,12 @@
 import { z } from 'zod';
+
 import { protectedProcedure } from '../../builders';
 
 const createProcedure = protectedProcedure
 	.input(
 		z.object({
 			userId: z.string(),
-		})
+		}),
 	)
 	.mutation(async (opts) => {
 		const { prisma, jwt } = opts.ctx;

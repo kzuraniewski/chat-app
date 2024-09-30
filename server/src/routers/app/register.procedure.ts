@@ -1,6 +1,8 @@
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { hashPassword, setTokenCookie } from '../../utils/auth';
+
+import { hashPassword, setTokenCookie } from '@/utils/auth';
+
 import { publicProcedure } from '../builders';
 
 const registerProcedure = publicProcedure
@@ -9,7 +11,7 @@ const registerProcedure = publicProcedure
 			username: z.string(),
 			email: z.string().email(),
 			password: z.string(),
-		})
+		}),
 	)
 	.mutation(async (opts) => {
 		const { username, email, password } = opts.input;

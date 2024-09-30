@@ -1,4 +1,5 @@
-import { t } from '../../trpc';
+import { t } from '@/trpc';
+
 import onUpdateProcedure from './onUpdate.procedure';
 import sendMessageProcedure from './sendMessage.procedure';
 

@@ -4,10 +4,10 @@ import cors from 'cors';
 import express from 'express';
 import { WebSocketServer } from 'ws';
 
-import logger from './lib/logger';
-import { appRouter, liveChatRouter } from './routers';
-import { createContext } from './trpc';
-import env from './utils/env';
+import logger from '@/lib/logger';
+import { appRouter, liveChatRouter } from '@/routers';
+import { createContext } from '@/trpc';
+import env from '@/utils/env';
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(
 		batching: {
 			enabled: true,
 		},
-	})
+	}),
 );
 
 app.listen(env.httpPort, () => {

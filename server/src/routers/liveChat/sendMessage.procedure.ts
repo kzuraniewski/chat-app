@@ -1,5 +1,6 @@
-import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
+
 import { protectedProcedure } from '../builders';
 
 const sendMessageProcedure = protectedProcedure
@@ -7,7 +8,7 @@ const sendMessageProcedure = protectedProcedure
 		z.object({
 			conversationId: z.string(),
 			content: z.string(),
-		})
+		}),
 	)
 	.mutation(async (opts) => {
 		const { events, prisma, jwt } = opts.ctx;

@@ -1,6 +1,7 @@
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
-import { createContext } from '../trpc';
+
+import { createContext } from '@/trpc';
 
 describe('TRPC module', () => {
 	const mockOptions = {

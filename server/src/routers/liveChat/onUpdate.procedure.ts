@@ -1,13 +1,14 @@
+import { TRPCError } from '@trpc/server';
 import { observable } from '@trpc/server/observable';
 import { z } from 'zod';
-import { TRPCError } from '@trpc/server';
-import { protectedProcedure, wsProcedure } from '../builders';
+
+import { wsProcedure } from '../builders';
 
 const onUpdateProcedure = wsProcedure
 	.input(
 		z.object({
 			conversationId: z.string(),
-		})
+		}),
 	)
 	.subscription(async (opts) => {
 		const { events, prisma, jwt } = opts.ctx;

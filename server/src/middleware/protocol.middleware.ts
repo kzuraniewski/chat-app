@@ -1,4 +1,4 @@
-import { ExpressContext, t, WsContext } from '../trpc';
+import { ExpressContext, t, WsContext } from '@/trpc';
 
 export type Protocol = 'http' | 'ws';
 

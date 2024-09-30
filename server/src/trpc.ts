@@ -1,10 +1,11 @@
+import EventEmitter from 'events';
 import { initTRPC } from '@trpc/server';
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
-import EventEmitter from 'events';
-import { prisma } from './prisma';
-import { getJwtPayload, JwtPayload } from './utils/auth';
 import cookie from 'cookie';
+
+import { prisma } from '@/prisma';
+import { getJwtPayload, JwtPayload } from '@/utils/auth';
 
 const events = new EventEmitter();
 
