@@ -1,14 +1,13 @@
-import express from 'express';
-import cors from 'cors';
-import { WebSocketServer } from 'ws';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
+import cors from 'cors';
+import express from 'express';
+import { WebSocketServer } from 'ws';
 
-import env from './utils/env';
 import logger from './lib/logger';
-import { appRouter } from './routers/app';
+import { appRouter, liveChatRouter } from './routers';
 import { createContext } from './trpc';
-import liveChatRouter from './routers/liveChat';
+import env from './utils/env';
 
 const app = express();
 

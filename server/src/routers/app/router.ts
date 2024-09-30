@@ -1,5 +1,5 @@
 import { t } from '../../trpc';
-import conversationsRouter from './conversations';
+import conversationsRouter from './conversations/router';
 import loginProcedure from './login.procedure';
 import registerProcedure from './register.procedure';
 import userProcedure from './user.procedure';
